@@ -1120,7 +1120,7 @@
         <div class="video-structure">
           <p><strong>叙事结构：</strong>考古现场发现 → 汉代历史闪回 → 黄粱一梦哲学隐喻 → 博物馆当代反思</p>
           <p><strong>技术特点：</strong>三维扫描数据重建 · PBR材质渲染 · 动态光影模拟 · 历史场景复原</p>
-          <p><strong>视频信息：</strong>时长：8分42秒 | 分辨率：4K | 格式：MP4</p>
+          <p><strong>视频信息：</strong>时长：2分57秒 | 分辨率：4K | 格式：MP4</p>
         </div>
       </div>
     </div>
