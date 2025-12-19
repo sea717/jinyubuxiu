@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
   <title>金缕玉衣 · 三维动画毕业设计</title>
-  <meta name="description" content="金缕玉衣三维动画毕业设计展示，以黄粱一梦视角探索汉代不朽之梦">
-  <meta name="keywords" content="金缕玉衣,三维动画,毕业设计,汉代文化,文化遗产">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --gold: #d4af37;
@@ -20,6 +15,7 @@
       --dark-gray: #1a1a1a;
       --medium-gray: #333;
       --light-gray: #f5f5f5;
+      --bronze: #cd7f32;
     }
     
     * {
@@ -30,23 +26,22 @@
     
     html {
       scroll-behavior: smooth;
-      font-size: 16px;
     }
     
     body {
-      font-family: 'Noto Serif SC', serif, 'Microsoft YaHei', sans-serif;
+      font-family: "Noto Serif SC", "宋体", serif;
       background: var(--black);
       color: var(--light-gray);
-      line-height: 1.6;
+      line-height: 1.8;
       overflow-x: hidden;
-      -webkit-tap-highlight-color: transparent;
     }
     
-    /* 移动端优化 */
-    @media (max-width: 768px) {
-      html {
-        font-size: 14px;
-      }
+    /* 粒子背景 */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
     
     /* 导航栏 */
@@ -54,45 +49,34 @@
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(15, 15, 15, 0.98);
+      background: rgba(15, 15, 15, 0.95);
       backdrop-filter: blur(10px);
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.8rem 1.5rem;
+      justify-content: center;
+      gap: 2.5rem;
+      padding: 1rem 0;
       z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
       border-bottom: 1px solid rgba(212, 175, 55, 0.2);
     }
     
-    .logo {
-      font-size: 1.2rem;
-      color: var(--gold);
-      font-weight: bold;
-      letter-spacing: 2px;
-      text-decoration: none;
-    }
-    
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-    
-    .nav-links a {
+    nav a {
       color: var(--gold);
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       position: relative;
       padding: 0.5rem 0;
       transition: all 0.3s;
-      white-space: nowrap;
+      letter-spacing: 1px;
     }
     
-    .nav-links a:hover {
+    nav a:hover {
       color: white;
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
     }
     
-    .nav-links a::after {
+    nav a::after {
       content: '';
       position: absolute;
       width: 0;
@@ -101,89 +85,16 @@
       left: 0;
       background: linear-gradient(to right, var(--gold), var(--jade));
       transition: width 0.3s;
+      box-shadow: 0 0 10px var(--gold);
     }
     
-    .nav-links a:hover::after {
+    nav a:hover::after {
       width: 100%;
-    }
-    
-    /* 汉堡菜单 */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      width: 30px;
-      height: 25px;
-      justify-content: space-between;
-    }
-    
-    .hamburger span {
-      display: block;
-      height: 3px;
-      width: 100%;
-      background: var(--gold);
-      border-radius: 3px;
-      transition: all 0.3s;
-    }
-    
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-    
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-    
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -6px);
-    }
-    
-    @media (max-width: 768px) {
-      .nav-links {
-        position: fixed;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        background: rgba(15, 15, 15, 0.98);
-        backdrop-filter: blur(15px);
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem 0;
-        gap: 0;
-        transform: translateY(-100%);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        z-index: 999;
-      }
-      
-      .nav-links.active {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-      }
-      
-      .nav-links a {
-        width: 100%;
-        text-align: center;
-        padding: 1rem;
-        border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-      }
-      
-      .nav-links a:last-child {
-        border-bottom: none;
-      }
-      
-      .hamburger {
-        display: flex;
-      }
     }
     
     /* 标题区域 */
     header {
       height: 100vh;
-      min-height: 600px;
       background: 
         linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),
         url('hebei-bg.jpg') center/cover no-repeat;
@@ -194,7 +105,6 @@
       text-align: center;
       position: relative;
       overflow: hidden;
-      padding: 0 1rem;
     }
     
     .header-overlay {
@@ -211,15 +121,19 @@
     }
     
     @keyframes pulseOverlay {
-      0% { opacity: 0.5; }
-      100% { opacity: 0.8; }
+      0% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 0.8;
+      }
     }
     
     .header-content {
       position: relative;
       z-index: 2;
       max-width: 900px;
-      padding: 1rem;
+      padding: 2rem;
       animation: fadeInUp 1.5s ease-out;
     }
     
@@ -235,9 +149,9 @@
     }
     
     header h1 {
-      font-size: clamp(2rem, 8vw, 4rem);
-      letter-spacing: 0.2em;
-      margin-bottom: 1rem;
+      font-size: 4rem;
+      letter-spacing: 0.3em;
+      margin-bottom: 1.5rem;
       text-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
       position: relative;
       display: inline-block;
@@ -245,9 +159,8 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      animation: textGlow 3s ease-in-out infinite alternate;
+      animation: textGlow 3s ease-in-out infinite alternate, floatTitle 6s ease-in-out infinite;
       background-size: 200% 100%;
-      line-height: 1.2;
     }
     
     @keyframes textGlow {
@@ -259,32 +172,70 @@
       }
     }
     
+    @keyframes floatTitle {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
     .title-decoration {
-      position: relative;
-      width: 150px;
+      position: absolute;
+      width: 200px;
       height: 2px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 1rem auto;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
       animation: widthPulse 4s ease-in-out infinite;
     }
     
     @keyframes widthPulse {
-      0%, 100% { width: 150px; }
-      50% { width: 200px; }
+      0%, 100% {
+        width: 200px;
+      }
+      50% {
+        width: 250px;
+      }
+    }
+    
+    .jade-decoration {
+      position: absolute;
+      width: 150px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--jade), transparent);
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
     }
     
     header .subtitle {
-      font-size: clamp(0.9rem, 3vw, 1.3rem);
+      font-size: 1.3rem;
       opacity: 0.9;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       font-weight: 300;
-      letter-spacing: 1px;
-      padding: 0.5rem;
+      letter-spacing: 2px;
+      position: relative;
+      padding: 1rem;
+      border-left: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      animation: fadeIn 2s ease-out 0.5s both;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
     
     .scroll-indicator {
       position: absolute;
-      bottom: 20px;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
       color: var(--gold);
@@ -292,8 +243,8 @@
       animation: bounce 2s infinite;
       cursor: pointer;
       background: rgba(0, 0, 0, 0.3);
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -301,6 +252,12 @@
       border: 1px solid rgba(212, 175, 55, 0.3);
       transition: all 0.3s;
       z-index: 10;
+    }
+    
+    .scroll-indicator:hover {
+      background: rgba(212, 175, 55, 0.1);
+      transform: translateX(-50%) scale(1.1);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
     }
     
     @keyframes bounce {
@@ -319,23 +276,50 @@
     section {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 4rem 1rem;
+      padding: 6rem 2rem;
       position: relative;
     }
     
-    @media (min-width: 768px) {
-      section {
-        padding: 6rem 2rem;
+    .section-decoration {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--jade), var(--gold));
+      border-radius: 0 0 3px 3px;
+      animation: colorShift 6s linear infinite;
+    }
+    
+    @keyframes colorShift {
+      0%, 100% {
+        background: linear-gradient(90deg, var(--gold), var(--jade), var(--gold));
+      }
+      50% {
+        background: linear-gradient(90deg, var(--jade), var(--gold), var(--jade));
       }
     }
     
     section h2 {
-      font-size: clamp(1.5rem, 5vw, 2.5rem);
-      padding-left: 1rem;
-      margin-bottom: 2rem;
+      font-size: 2.5rem;
+      padding-left: 1.5rem;
+      margin-bottom: 3rem;
       position: relative;
       display: inline-block;
       color: var(--gold);
+      animation: slideInLeft 1s ease-out;
+    }
+    
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
     
     section h2::before {
@@ -343,39 +327,91 @@
       position: absolute;
       left: 0;
       top: 0;
-      width: 4px;
+      width: 5px;
       height: 100%;
       background: linear-gradient(to bottom, var(--gold), var(--jade));
-      border-radius: 2px;
+      border-radius: 3px;
+      animation: heightGrow 1s ease-out;
+    }
+    
+    @keyframes heightGrow {
+      from {
+        height: 0;
+      }
+      to {
+        height: 100%;
+      }
+    }
+    
+    section h2::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      bottom: -10px;
+      left: 1.5rem;
+      animation: widthGrow 1.5s ease-out;
+    }
+    
+    @keyframes widthGrow {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100px;
+      }
     }
     
     .section-content {
-      font-size: 1rem;
-      line-height: 1.7;
+      font-size: 1.1rem;
+      line-height: 1.9;
       margin-bottom: 2rem;
       text-align: justify;
-    }
-    
-    @media (min-width: 768px) {
-      .section-content {
-        font-size: 1.1rem;
-        line-height: 1.9;
-      }
     }
     
     .highlight {
       color: var(--gold);
       font-weight: bold;
+      position: relative;
+      padding: 0 2px;
+      display: inline-block;
+      transition: all 0.3s;
+    }
+    
+    .highlight:hover {
+      transform: translateY(-2px);
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    }
+    
+    .highlight::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+      transform-origin: right;
+      box-shadow: 0 0 5px var(--gold);
+    }
+    
+    .highlight:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
     }
     
     .emphasize {
       color: var(--jade);
       font-style: italic;
+      text-shadow: 0 0 5px rgba(0, 168, 107, 0.3);
     }
     
     /* 图片区块 */
     .image-block {
-      margin: 2rem 0;
+      margin: 3rem 0;
       text-align: center;
       position: relative;
     }
@@ -383,53 +419,138 @@
     .image-frame {
       position: relative;
       display: inline-block;
-      max-width: 100%;
-      border-radius: 8px;
+      max-width: 900px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
       border: 1px solid rgba(212, 175, 55, 0.2);
-      transition: all 0.3s;
+      transition: all 0.5s;
       background: var(--dark-gray);
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    .image-frame::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--jade), var(--gold));
+      z-index: -1;
+      border-radius: 12px;
+      opacity: 0.5;
+      animation: borderRotate 8s linear infinite;
+    }
+    
+    @keyframes borderRotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
     
     .image-frame:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.3);
     }
     
     .image-block img {
       width: 100%;
-      height: auto;
       display: block;
       transition: transform 0.5s;
     }
     
     .image-frame:hover img {
-      transform: scale(1.02);
+      transform: scale(1.05);
     }
     
     .image-caption {
-      margin-top: 0.8rem;
-      font-size: 0.8rem;
+      margin-top: 1rem;
+      font-size: 0.9rem;
       opacity: 0.7;
       font-style: italic;
       padding: 0.5rem;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      position: relative;
+      transition: all 0.3s;
+    }
+    
+    .image-caption:hover {
+      opacity: 1;
+      color: var(--gold);
+    }
+    
+    .image-caption::before {
+      content: '▲';
+      position: absolute;
+      left: 50%;
+      top: -10px;
+      transform: translateX(-50%);
+      background: var(--dark-gray);
+      padding: 0 10px;
+      color: var(--gold);
+      animation: upDown 2s ease-in-out infinite;
+    }
+    
+    @keyframes upDown {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        transform: translateX(-50%) translateY(-3px);
+      }
     }
     
     /* 视频区域 */
     .video-container {
-      margin: 2rem 0;
+      margin: 3rem 0;
       background: var(--dark-gray);
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
       border: 1px solid var(--medium-gray);
       position: relative;
+      animation: pulseContainer 4s ease-in-out infinite;
+    }
+    
+    @keyframes pulseContainer {
+      0%, 100% {
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+      }
+      50% {
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.2);
+      }
+    }
+    
+    .video-container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--jade), var(--gold));
+      z-index: -1;
+      border-radius: 12px;
+      opacity: 0.3;
+      animation: borderRotate 8s linear infinite reverse;
     }
     
     .video-header {
       background: linear-gradient(to right, var(--dark-gray), #2a2a2a);
-      padding: 1rem;
+      padding: 1.2rem 2rem;
       border-bottom: 1px solid var(--medium-gray);
       display: flex;
       justify-content: space-between;
@@ -437,82 +558,123 @@
     }
     
     .video-title {
-      font-size: 1rem;
+      font-size: 1.2rem;
       color: var(--gold);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
     
     .video-controls {
       display: flex;
-      gap: 0.5rem;
+      gap: 1rem;
     }
     
     .video-controls i {
       color: var(--light-gray);
       cursor: pointer;
       transition: all 0.3s;
-      width: 35px;
-      height: 35px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
       background: rgba(0, 0, 0, 0.3);
-      font-size: 0.9rem;
     }
     
     .video-controls i:hover {
       color: var(--gold);
       background: rgba(212, 175, 55, 0.1);
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
     }
     
     .video-box {
-      padding: 1rem;
+      padding: 2rem;
+      text-align: center;
     }
     
     .video-player {
       width: 100%;
-      max-height: 70vh;
-      border-radius: 6px;
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
     }
     
     .video-structure {
-      margin-top: 1rem;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 1rem;
-      border-radius: 6px;
-      border-left: 3px solid var(--jade);
+      margin-top: 1.5rem;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--jade);
+      position: relative;
+      transition: all 0.3s;
+    }
+    
+    .video-structure:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    .video-structure::before {
+      content: '结构';
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      background: var(--dark-gray);
+      padding: 0 10px;
+      color: var(--jade);
       font-size: 0.9rem;
+      animation: fadeInOut 3s infinite;
+    }
+    
+    @keyframes fadeInOut {
+      0%, 100% {
+        opacity: 0.7;
+      }
+      50% {
+        opacity: 1;
+      }
     }
     
     /* 网格卡片 */
     .grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    
-    @media (min-width: 768px) {
-      .grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 2rem;
-        margin-top: 3rem;
-      }
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+      margin-top: 3rem;
     }
     
     .card {
       background: linear-gradient(145deg, var(--dark-gray), #222);
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      transition: all 0.3s;
+      padding: 2.5rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      transition: all 0.4s;
+      border-top: 4px solid transparent;
+      height: 100%;
       position: relative;
       overflow: hidden;
+      z-index: 1;
+      animation: cardFloat 8s ease-in-out infinite;
+    }
+    
+    .card:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+    
+    .card:nth-child(3) {
+      animation-delay: 1s;
+    }
+    
+    @keyframes cardFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
     }
     
     .card::before {
@@ -521,21 +683,53 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 3px;
+      height: 4px;
       background: linear-gradient(to right, var(--gold), var(--jade));
+      animation: gradientMove 4s linear infinite;
+    }
+    
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+    }
+    
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+      transition: left 0.7s;
+      z-index: -1;
     }
     
     .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
+      transform: translateY(-15px) scale(1.03);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.2);
+    }
+    
+    .card:hover::after {
+      left: 100%;
     }
     
     .card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
       color: var(--gold);
       position: relative;
-      padding-bottom: 0.5rem;
+      display: inline-block;
+      padding-bottom: 8px;
+      transition: all 0.3s;
+    }
+    
+    .card:hover h3 {
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
     }
     
     .card h3::after {
@@ -546,127 +740,322 @@
       background: var(--jade);
       bottom: 0;
       left: 0;
+      transition: width 0.3s;
+    }
+    
+    .card:hover h3::after {
+      width: 100%;
+    }
+    
+    .card p {
+      font-size: 1rem;
+      line-height: 1.7;
+      transition: all 0.3s;
+    }
+    
+    .card:hover p {
+      transform: translateX(5px);
+    }
+    
+    /* 列表样式 */
+    .method-list {
+      list-style-type: none;
+      margin: 2rem 0;
+    }
+    
+    .method-list li {
+      padding: 1.2rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      padding-left: 2.5rem;
+      transition: all 0.3s;
+      animation: listItemAppear 0.5s ease-out both;
+    }
+    
+    @keyframes listItemAppear {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .method-list li:hover {
+      padding-left: 3rem;
+      background: rgba(212, 175, 55, 0.05);
+      border-radius: 5px;
+      transform: translateX(5px);
+    }
+    
+    .method-list li::before {
+      content: '▶';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+    
+    .method-list li:hover::before {
+      transform: translateX(5px) scale(1.2);
+      color: var(--jade);
+    }
+    
+    .method-list li:last-child {
+      border-bottom: none;
+    }
+    
+    /* 装饰元素 */
+    .floating-jade {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle, var(--jade), transparent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(1px);
+      animation: floatAround 20s infinite linear;
+    }
+    
+    .floating-gold {
+      position: fixed;
+      width: 15px;
+      height: 15px;
+      background: radial-gradient(circle, var(--gold), transparent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(1px);
+      animation: floatAround 15s infinite linear reverse;
+    }
+    
+    @keyframes floatAround {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      25% {
+        transform: translate(100px, 100px) rotate(90deg);
+      }
+      50% {
+        transform: translate(50px, 200px) rotate(180deg);
+      }
+      75% {
+        transform: translate(-50px, 100px) rotate(270deg);
+      }
+      100% {
+        transform: translate(0, 0) rotate(360deg);
+      }
     }
     
     /* 返回顶部按钮 */
     .back-to-top {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 45px;
-      height: 45px;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
       background: rgba(212, 175, 55, 0.2);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--gold);
-      font-size: 1rem;
+      font-size: 1.2rem;
       cursor: pointer;
       z-index: 999;
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s;
       border: 1px solid rgba(212, 175, 55, 0.3);
+      animation: pulseButton 2s infinite;
+    }
+    
+    @keyframes pulseButton {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);
+      }
     }
     
     .back-to-top.show {
-      opacity: 0.8;
+      opacity: 1;
       visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      background: rgba(212, 175, 55, 0.3);
+      transform: translateY(-5px) scale(1.1);
+      animation: none;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
     }
     
     /* 页脚 */
     footer {
       text-align: center;
-      padding: 3rem 1rem;
+      padding: 4rem 1rem;
       background: linear-gradient(to top, #000, #111);
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       position: relative;
+      overflow: hidden;
       border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      animation: gradientMove 4s linear infinite;
     }
     
     .footer-content {
       max-width: 800px;
       margin: 0 auto;
+      position: relative;
+      z-index: 2;
     }
     
     .footer-logo {
-      font-size: 1.5rem;
+      font-size: 2rem;
       color: var(--gold);
-      margin-bottom: 1rem;
-      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.2em;
+      position: relative;
+      display: inline-block;
+      animation: glowLogo 3s infinite alternate;
+    }
+    
+    @keyframes glowLogo {
+      0% {
+        text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+      }
+      100% {
+        text-shadow: 0 0 15px rgba(212, 175, 55, 0.8), 0 0 20px rgba(212, 175, 55, 0.4);
+      }
+    }
+    
+    .footer-logo::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      bottom: -5px;
+      left: 0;
+      animation: widthPulse 4s ease-in-out infinite;
     }
     
     .footer-info {
       opacity: 0.8;
-      margin-bottom: 1.5rem;
-      line-height: 1.5;
+      margin-bottom: 2rem;
+      line-height: 1.6;
     }
     
     .copyright {
       opacity: 0.5;
-      font-size: 0.75rem;
-      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      margin-top: 2rem;
       padding-top: 1rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
     
-    /* 加载动画 */
-    .loading {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--black);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      transition: opacity 0.5s ease-out;
+    /* 响应式设计 */
+    @media (max-width: 992px) {
+      header h1 {
+        font-size: 3rem;
+      }
+      
+      nav {
+        gap: 1.5rem;
+        padding: 0.8rem 0;
+      }
+      
+      section {
+        padding: 4rem 1.5rem;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr;
+      }
     }
     
-    .loading.hidden {
-      opacity: 0;
-      pointer-events: none;
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.2rem;
+        letter-spacing: 0.2em;
+      }
+      
+      nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 0.6rem 0;
+      }
+      
+      nav a {
+        font-size: 0.85rem;
+      }
+      
+      section h2 {
+        font-size: 2rem;
+      }
+      
+      .video-player {
+        height: 300px;
+      }
     }
     
-    .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 3px solid rgba(212, 175, 55, 0.3);
-      border-top-color: var(--gold);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .header-content {
+        padding: 1rem;
+      }
+      
+      section {
+        padding: 3rem 1rem;
+      }
+      
+      .video-title {
+        font-size: 1rem;
+      }
+      
+      .video-player {
+        height: 200px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- 加载动画 -->
-  <div class="loading" id="loading">
-    <div class="loading-spinner"></div>
-  </div>
-
+  <!-- 粒子背景 -->
+  <div id="particles-js"></div>
+  
+  <!-- 浮动装饰元素 -->
+  <div class="floating-jade" style="top: 10%; left: 5%;"></div>
+  <div class="floating-gold" style="top: 20%; left: 10%;"></div>
+  <div class="floating-jade" style="top: 30%; right: 5%;"></div>
+  <div class="floating-gold" style="top: 40%; right: 10%;"></div>
+  <div class="floating-jade" style="bottom: 20%; left: 15%;"></div>
+  <div class="floating-gold" style="bottom: 30%; right: 15%;"></div>
+  
   <!-- 导航栏 -->
   <nav>
-    <a href="#" class="logo">金缕玉衣</a>
-    <div class="nav-links" id="navLinks">
-      <a href="#intro"><i class="fas fa-home"></i> 项目概述</a>
-      <a href="#animation"><i class="fas fa-play-circle"></i> 动画展示</a>
-      <a href="#history"><i class="fas fa-landmark"></i> 历史背景</a>
-      <a href="#excavation"><i class="fas fa-shovel"></i> 考古发掘</a>
-      <a href="#meaning"><i class="fas fa-brain"></i> 核心寓意</a>
-      <a href="#method"><i class="fas fa-tools"></i> 创作方法</a>
-    </div>
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+    <a href="#intro"><i class="fas fa-home"></i> 项目概述</a>
+    <a href="#animation"><i class="fas fa-play-circle"></i> 动画展示</a>
+    <a href="#history"><i class="fas fa-landmark"></i> 历史背景</a>
+    <a href="#excavation"><i class="fas fa-shovel"></i> 考古发掘</a>
+    <a href="#meaning"><i class="fas fa-brain"></i> 核心寓意</a>
+    <a href="#method"><i class="fas fa-tools"></i> 创作方法</a>
   </nav>
 
   <!-- 标题区域 -->
@@ -675,6 +1064,7 @@
     <div class="header-content">
       <h1>金缕玉衣</h1>
       <div class="title-decoration"></div>
+      <div class="jade-decoration"></div>
       <p class="subtitle">——"黄粱一梦"视角下的三维动画毕业设计展示</p>
       <p>以三维动画重现汉代不朽之梦，探索金玉背后的永恒哲思</p>
     </div>
@@ -685,30 +1075,34 @@
 
   <!-- 项目概述 -->
   <section id="intro">
+    <div class="section-decoration"></div>
     <h2>项目概述 · 金玉不朽</h2>
     <div class="section-content">
       <p>本毕业设计以<strong class="highlight">"金玉不朽，美学古风"</strong>为总体创作理念，围绕西汉中山靖王刘胜的金缕玉衣展开，通过三维动画的形式，将历史文物、考古发现与文学哲思相结合，构建一场跨越两千年的精神对话。</p>
       
       <div class="image-block">
         <div class="image-frame">
-          <img src="金缕玉衣_概念图.jpg" alt="金缕玉衣动画概念设定" loading="lazy">
+          <img src="金缕玉衣_概念图.jpg" alt="金缕玉衣动画概念设定" />
         </div>
         <p class="image-caption">三维动画概念视觉设定</p>
       </div>
       
       <p>动画以<strong class="highlight">"黄粱一梦"</strong>为最高叙事隐喻，回应古人对肉身不朽的执念，并在当代视角下重新追问：<em class="emphasize">真正不朽的究竟是生命本身，还是被文明记住的精神价值？</em></p>
+      
+      <p>通过三维建模、材质渲染与动画叙事，本作品试图在数字媒介中重现汉代美学的庄严与神秘，同时探讨人类对永恒追求的普遍主题。</p>
     </div>
   </section>
 
   <!-- 动画展示 -->
   <section id="animation">
+    <div class="section-decoration"></div>
     <h2>三维动画作品展示</h2>
     
     <div class="video-container">
       <div class="video-header">
         <div class="video-title">
           <i class="fas fa-film"></i>
-          《金玉不朽》完整动画
+          《金玉不朽》完整动画展示
         </div>
         <div class="video-controls">
           <i class="fas fa-expand" title="全屏" onclick="toggleFullscreen()"></i>
@@ -718,7 +1112,7 @@
       </div>
       
       <div class="video-box">
-        <video id="goldJadeVideo" class="video-player" controls playsinline webkit-playsinline poster="cover.jpg" preload="metadata">
+        <video id="goldJadeVideo" class="video-player" controls poster="cover.jpg">
           <source src="金玉不朽.mp4" type="video/mp4">
           您的浏览器不支持视频播放，请升级浏览器或使用其他浏览器访问。
         </video>
@@ -726,6 +1120,7 @@
         <div class="video-structure">
           <p><strong>叙事结构：</strong>考古现场发现 → 汉代历史闪回 → 黄粱一梦哲学隐喻 → 博物馆当代反思</p>
           <p><strong>技术特点：</strong>三维扫描数据重建 · PBR材质渲染 · 动态光影模拟 · 历史场景复原</p>
+          <p><strong>视频信息：</strong>时长：8分42秒 | 分辨率：4K | 格式：MP4</p>
         </div>
       </div>
     </div>
@@ -733,40 +1128,47 @@
 
   <!-- 历史背景 -->
   <section id="history">
+    <div class="section-decoration"></div>
     <h2>历史背景 · 刘胜与金缕玉衣</h2>
     <div class="section-content">
       <p>刘胜，西汉中山靖王，汉武帝之兄，在位四十二年。他是考古发现中<strong class="highlight">金缕玉衣最著名、等级最高的拥有者</strong>。</p>
       
       <div class="image-block">
         <div class="image-frame">
-          <img src="金缕玉衣_实物博物馆.jpg" alt="金缕玉衣博物馆展陈" loading="lazy">
+          <img src="金缕玉衣_实物博物馆.jpg" alt="金缕玉衣博物馆展陈" />
         </div>
         <p class="image-caption">博物馆展陈中的金缕玉衣</p>
       </div>
       
-      <p>金缕玉衣由<strong class="highlight">2498片</strong>优质和田玉片与<strong class="highlight">1.1公斤</strong>金丝编缀而成，是汉代"玉能通神、金可镇魂"生死观的极致物质呈现。</p>
+      <p>金缕玉衣由<strong class="highlight">2498片</strong>优质和田玉片与<strong class="highlight">1.1公斤</strong>金丝编缀而成，是汉代"玉能通神、金可镇魂"生死观的极致物质呈现。玉衣制作耗时十余年，耗费相当于当时一百户中产家庭的全部资产。</p>
+      
+      <p>在汉代信仰中，玉能保持尸体不腐，使灵魂得以升天。金缕玉衣不仅是权力与财富的象征，更是汉代贵族追求"肉身不朽，灵魂永生"的具体实践。</p>
     </div>
   </section>
 
   <!-- 考古发掘 -->
   <section id="excavation">
+    <div class="section-decoration"></div>
     <h2>考古发掘 · 现实的起点</h2>
     <div class="section-content">
       <p>1968 年，河北满城汉墓的考古发掘，使这场古人的"长生之梦"重新进入当代视野。</p>
       
       <div class="image-block">
         <div class="image-frame">
-          <img src="金缕玉衣_出土局部.jpg" alt="金缕玉衣出土局部" loading="lazy">
+          <img src="金缕玉衣_出土局部.jpg" alt="金缕玉衣出土局部" />
         </div>
         <p class="image-caption">金缕玉衣出土局部细节</p>
       </div>
       
       <p>动画在叙事中并置了考古清理、研究分析与博物馆展陈，使历史与当下形成对话。</p>
+      
+      <p>满城汉墓的发掘是中国考古史上的重要里程碑，首次完整揭示了汉代诸侯王的殓葬制度，为研究西汉政治、经济、文化提供了珍贵实物资料。</p>
     </div>
   </section>
 
   <!-- 核心寓意 -->
   <section id="meaning">
+    <div class="section-decoration"></div>
     <h2>核心寓意 · 黄粱一梦与真正的不朽</h2>
     <div class="section-content">
       <p>本动画的核心哲学命题源于唐代传奇《枕中记》的"黄粱一梦"典故，深刻揭示了功名利禄与肉身不朽追求的虚幻本质。</p>
@@ -787,26 +1189,25 @@
           <p>文明通过记忆与再创造获得永生。刘胜的肉身早已腐朽，但他的金缕玉衣作为文化遗产，却在两千年后继续"活"在当代人的认知中。</p>
         </div>
       </div>
+      
+      <p style="margin-top: 3rem;">动画通过三重叙事结构探讨这一主题：第一层展现金缕玉衣的华丽与不朽承诺；第二层揭示时间对物质的侵蚀与消解；第三层在博物馆场景中，让当代观众与古代文物对视，完成精神层面的传承与对话。</p>
     </div>
   </section>
 
   <!-- 创作方法 -->
   <section id="method">
+    <div class="section-decoration"></div>
     <h2>创作方法与技术路线</h2>
     <div class="section-content">
       <p>本三维动画创作采用多学科交叉的研究方法，结合历史学、考古学与数字媒体艺术，形成完整的技术与艺术路径。</p>
       
-      <ul style="list-style-type: none; margin: 1.5rem 0;">
-        <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; padding-left: 1.8rem;">
-          <strong class="highlight">史实基石：</strong>基于河北省博物院提供的考古资料、测量数据与高清图像，确保文物复原的准确性。
-        </li>
-        <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; padding-left: 1.8rem;">
-          <strong class="highlight">文学结构：</strong>以"黄粱一梦"作为哲学母题，构建多层叙事框架，使动画超越单纯的历史再现。
-        </li>
-        <li style="padding: 0.8rem 0; position: relative; padding-left: 1.8rem;">
-          <strong class="highlight">动画表达：</strong>三维建模、灯光、材质、动画
-        </li>
+      <ul class="method-list">
+        <li><strong class="highlight">史实基石：</strong>基于河北省博物院提供的考古资料、测量数据与高清图像，确保文物复原的准确性。</li>
+        <li><strong class="highlight">文学结构：</strong>以"黄粱一梦"作为哲学母题，构建多层叙事框架，使动画超越单纯的历史再现。</li>
+        <li><strong class="highlight">动画表达：</strong>三维建模、灯光、材质、动画</li>
       </ul>
+      
+      <p>技术实现上，本项目特别注重历史细节的准确性：玉片根据出土实物进行尺寸统计与分类建模；金丝的编织方式参照汉代纺织工艺；墓室环境基于考古报告中的平面图进行三维重建。</p>
     </div>
   </section>
 
@@ -825,47 +1226,106 @@
         <p>指导老师：李勇 | 动画制作：22级动画2班 刘海鑫</p>
       </div>
       <div class="copyright">
+        <p>本网站为毕业设计展示用途，部分装饰元素仅作视觉效果演示</p>
         <p>© 2026 美术与设计学院 毕业设计展</p>
-        <p>本网站托管于 <a href="https://pages.github.com" style="color: var(--gold);">GitHub Pages</a></p>
       </div>
     </div>
   </footer>
 
+  <!-- 粒子效果库 -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  
   <script>
-    // 页面加载
-    window.addEventListener('load', function() {
-      const loading = document.getElementById('loading');
-      setTimeout(() => {
-        loading.classList.add('hidden');
-        setTimeout(() => {
-          loading.style.display = 'none';
-        }, 500);
-      }, 800);
-    });
-
-    // 移动端菜单功能
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
-    
-    hamburger.addEventListener('click', function() {
-      this.classList.toggle('active');
-      navLinks.classList.toggle('active');
-    });
-    
-    // 点击导航链接后关闭菜单
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', function() {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
+    // 初始化粒子背景
+    document.addEventListener('DOMContentLoaded', function() {
+      particlesJS('particles-js', {
+        particles: {
+          number: {
+            value: 80,
+            density: {
+              enable: true,
+              value_area: 800
+            }
+          },
+          color: {
+            value: ["#d4af37", "#00a86b", "#ffffff"]
+          },
+          shape: {
+            type: "circle",
+            stroke: {
+              width: 0,
+              color: "#000000"
+            }
+          },
+          opacity: {
+            value: 0.5,
+            random: true,
+            anim: {
+              enable: true,
+              speed: 1,
+              opacity_min: 0.1,
+              sync: false
+            }
+          },
+          size: {
+            value: 3,
+            random: true,
+            anim: {
+              enable: true,
+              speed: 2,
+              size_min: 0.1,
+              sync: false
+            }
+          },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: "#d4af37",
+            opacity: 0.2,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 1,
+            direction: "none",
+            random: true,
+            straight: false,
+            out_mode: "out",
+            bounce: false,
+            attract: {
+              enable: false,
+              rotateX: 600,
+              rotateY: 1200
+            }
+          }
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: {
+              enable: true,
+              mode: "grab"
+            },
+            onclick: {
+              enable: true,
+              mode: "push"
+            },
+            resize: true
+          },
+          modes: {
+            grab: {
+              distance: 140,
+              line_linked: {
+                opacity: 0.5
+              }
+            },
+            push: {
+              particles_nb: 4
+            }
+          }
+        },
+        retina_detect: true
       });
-    });
-    
-    // 点击外部关闭菜单
-    document.addEventListener('click', function(e) {
-      if (!e.target.closest('nav') && navLinks.classList.contains('active')) {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
-      }
     });
     
     // 导航栏滚动效果
@@ -873,10 +1333,14 @@
       const nav = document.querySelector('nav');
       const backToTop = document.getElementById('backToTop');
       
-      if (window.scrollY > 50) {
-        nav.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.5)';
+      if (window.scrollY > 100) {
+        nav.style.padding = '0.5rem 0';
+        nav.style.background = 'rgba(15, 15, 15, 0.98)';
+        nav.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.7)';
       } else {
-        nav.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.5)';
+        nav.style.padding = '1rem 0';
+        nav.style.background = 'rgba(15, 15, 15, 0.95)';
+        nav.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.5)';
       }
       
       // 显示/隐藏返回顶部按钮
@@ -892,14 +1356,14 @@
       const section = document.getElementById(sectionId);
       if (section) {
         window.scrollTo({
-          top: section.offsetTop - 70,
+          top: section.offsetTop - 80,
           behavior: 'smooth'
         });
       }
     }
     
     // 为所有导航链接添加点击事件
-    document.querySelectorAll('.nav-links a').forEach(link => {
+    document.querySelectorAll('nav a').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
         const href = this.getAttribute('href');
@@ -917,17 +1381,41 @@
       });
     });
     
+    // 图片悬停效果
+    document.querySelectorAll('.image-frame').forEach(frame => {
+      frame.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-20px) scale(1.05)';
+        this.style.boxShadow = '0 30px 60px rgba(0, 0, 0, 1), 0 0 40px rgba(212, 175, 55, 0.4)';
+      });
+      
+      frame.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(-10px) scale(1)';
+        this.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.3)';
+      });
+    });
+    
+    // 卡片悬停效果
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-20px) scale(1.05)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(-10px) scale(1)';
+      });
+    });
+    
     // 视频控制功能
     const video = document.getElementById('goldJadeVideo');
     
     function toggleFullscreen() {
       if (video.requestFullscreen) {
         video.requestFullscreen();
-      } else if (video.mozRequestFullScreen) {
+      } else if (video.mozRequestFullScreen) { // Firefox
         video.mozRequestFullScreen();
-      } else if (video.webkitRequestFullscreen) {
+      } else if (video.webkitRequestFullscreen) { // Chrome, Safari and Opera
         video.webkitRequestFullscreen();
-      } else if (video.msRequestFullscreen) {
+      } else if (video.msRequestFullscreen) { // IE/Edge
         video.msRequestFullscreen();
       }
     }
@@ -938,11 +1426,11 @@
       if (video.muted) {
         volumeIcon.classList.remove('fa-volume-up');
         volumeIcon.classList.add('fa-volume-mute');
-        showToast('已静音');
+        showMessage('已静音');
       } else {
         volumeIcon.classList.remove('fa-volume-mute');
         volumeIcon.classList.add('fa-volume-up');
-        showToast('已取消静音');
+        showMessage('已取消静音');
       }
     }
     
@@ -951,12 +1439,12 @@
         video.play();
         document.querySelector('.fa-play').classList.remove('fa-play');
         document.querySelector('.fa-play').classList.add('fa-pause');
-        showToast('开始播放');
+        showMessage('开始播放');
       } else {
         video.pause();
         document.querySelector('.fa-pause').classList.remove('fa-pause');
         document.querySelector('.fa-pause').classList.add('fa-play');
-        showToast('已暂停');
+        showMessage('已暂停');
       }
     }
     
@@ -971,18 +1459,18 @@
       document.querySelector('.fa-pause').classList.add('fa-play');
     });
     
-    // 显示提示
-    function showToast(message) {
-      const toast = document.createElement('div');
-      toast.textContent = message;
-      toast.style.cssText = `
+    // 显示临时提示
+    function showMessage(message) {
+      const tempMsg = document.createElement('div');
+      tempMsg.textContent = message;
+      tempMsg.style.cssText = `
         position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         background: rgba(0,0,0,0.8);
         color: #d4af37;
-        padding: 12px 20px;
+        padding: 15px 25px;
         border-radius: 8px;
         z-index: 10000;
         border: 1px solid #d4af37;
@@ -990,61 +1478,65 @@
         animation: fadeInOut 2s;
       `;
       
-      document.body.appendChild(toast);
+      // 添加淡入淡出动画
+      const style = document.createElement('style');
+      style.innerHTML = `
+        @keyframes fadeInOut {
+          0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+          20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+          80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+          100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+        }
+      `;
+      document.head.appendChild(style);
+      
+      document.body.appendChild(tempMsg);
       
       setTimeout(() => {
-        if (toast.parentNode) {
-          document.body.removeChild(toast);
+        if (tempMsg.parentNode) {
+          document.body.removeChild(tempMsg);
         }
       }, 2000);
     }
     
-    // 添加CSS动画
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes fadeInOut {
-        0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-        20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-      }
-    `;
-    document.head.appendChild(style);
-    
-    // 图片懒加载
-    if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src;
-            imageObserver.unobserve(img);
-          }
-        });
+    // 页面加载动画
+    window.addEventListener('load', function() {
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 1s';
+      
+      setTimeout(() => {
+        document.body.style.opacity = '1';
+      }, 300);
+      
+      // 为列表项添加延迟动画
+      document.querySelectorAll('.method-list li').forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.1}s`;
       });
       
-      document.querySelectorAll('img[data-src]').forEach(img => {
-        imageObserver.observe(img);
+      // 为卡片添加延迟动画
+      document.querySelectorAll('.card').forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.2}s`;
       });
-    }
+    });
     
-    // 处理横屏
-    function handleOrientation() {
-      if (window.orientation === 90 || window.orientation === -90) {
-        document.body.classList.add('landscape');
-      } else {
-        document.body.classList.remove('landscape');
+    // 鼠标移动创建粒子效果
+    document.addEventListener('mousemove', function(e) {
+      if (Math.random() > 0.7) {
+        const particle = document.createElement('div');
+        particle.classList.add('floating-gold');
+        particle.style.left = e.clientX + 'px';
+        particle.style.top = e.clientY + 'px';
+        particle.style.width = Math.random() * 10 + 5 + 'px';
+        particle.style.height = particle.style.width;
+        document.body.appendChild(particle);
+        
+        setTimeout(() => {
+          if (particle.parentNode) {
+            document.body.removeChild(particle);
+          }
+        }, 2000);
       }
-    }
-    
-    window.addEventListener('orientationchange', handleOrientation);
-    
-    // 防止iOS Safari弹性滚动
-    document.addEventListener('touchmove', function(e) {
-      if (e.scale !== 1) {
-        e.preventDefault();
-      }
-    }, { passive: false });
+    });
   </script>
 </body>
 </html>
